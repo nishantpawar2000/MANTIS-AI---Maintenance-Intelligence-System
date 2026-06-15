@@ -188,6 +188,10 @@ function buildAnomalyFallback(equipment, hint) {
 
 function readJson(req) {
   return new Promise((resolve, reject) => {
+    if (req.body) {
+      if (typeof req.body === 'object') return resolve(req.body);
+      try { return resolve(JSON.parse(req.body)); } catch (e) { return resolve({}); }
+    }
     let body = "";
     req.on("data", (chunk) => { body += chunk; if (body.length > 1_000_000) { req.destroy(); reject(new Error("Body too large")); } });
     req.on("end", () => { try { resolve(body ? JSON.parse(body) : {}); } catch (e) { reject(e); } });
