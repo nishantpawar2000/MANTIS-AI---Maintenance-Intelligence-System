@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="MANTIS AI — Agentic maintenance intelligence platform for steel manufacturing. Predictive diagnostics, root cause analysis, SOP evidence retrieval, and intelligent maintenance planning."/>
+  <title>MANTIS AI | Predictive Maintenance Intelligence — Tata Steel</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+<div class="app-shell">
+
+  <!-- ══ TOP NAV ══ -->
+  <header class="topbar">
+    <div class="brand-mark">
+      <div class="logo">M</div>
+      <div>
+        <strong>MANTIS AI</strong>
+        <span>Maintenance Intelligence System</span>
+      </div>
+    </div>
+    <div class="command-search">
+      <span class="search-icon" aria-hidden="true"></span>
+      <input id="globalSearch" type="search" placeholder="Query telemetry, anomalies, SOPs, or work orders…" aria-label="Search maintenance knowledge"/>
+      <kbd>↵</kbd>
+    </div>
+    <div class="operator-pill">
+      <span>Active Session</span>
+      <strong>User</strong>
+    </div>
+  </header>
+
+  <!-- ══ SIDEBAR ══ -->
+  <aside class="sidebar">
+    <div class="sidebar-head">
+      <h1>MANTIS<br>INTELLIGENCE</h1>
+      <p>Agentic Operations Hub</p>
+    </div>
+    <nav aria-label="Primary navigation">
+      <button class="nav-item active" data-view="overview" id="nav-overview">
+        <i class="nav-icon" aria-hidden="true">⊞</i>
+        Command Center
+        <span class="nav-critical-badge" id="criticalBadge">2</span>
+      </button>
+      <button class="nav-item" data-view="crm-flow" id="nav-crm-flow">
+        <i class="nav-icon" aria-hidden="true">⟶</i>
+        CRM Process Flow
+      </button>
+      <button class="nav-item" data-view="diagnosis" id="nav-diagnosis">
+        <i class="nav-icon" aria-hidden="true">⚕</i>
+        AI Diagnosis
+      </button>
+      <button class="nav-item" data-view="planning" id="nav-planning">
+        <i class="nav-icon" aria-hidden="true">☰</i>
+        Maintenance Plan
+      </button>
+      <button class="nav-item" data-view="knowledge" id="nav-knowledge">
+        <i class="nav-icon" aria-hidden="true">◎</i>
+        Knowledge Base
+      </button>
+    </nav>
+    <div class="asset-selector">
+      <small>Active Node</small>
+      <strong id="assetLine">CRM | Mill Stand &amp; Quality</strong>
+      <span id="assetGroup">Cold Rolling Subsystem</span>
+    </div>
+    <div class="agent-status-panel" aria-label="Agent orchestration status">
+      <small>Agent Orchestration</small>
+      <div class="agent-row"><span class="agent-icon">📥</span><span>Ingestion Agent</span><span class="agent-dot live"></span><em>LIVE</em></div>
+      <div class="agent-row"><span class="agent-icon">🔍</span><span>Anomaly Detection</span><span class="agent-dot live"></span><em>LIVE</em></div>
+      <div class="agent-row"><span class="agent-icon">📚</span><span>RAG Retriever</span><span class="agent-dot ready"></span><em>READY</em></div>
+      <div class="agent-row"><span class="agent-icon">⚖️</span><span>Risk Assessor</span><span class="agent-dot ready"></span><em>READY</em></div>
+      <div class="agent-row"><span class="agent-icon">📋</span><span>Planner Agent</span><span class="agent-dot idle"></span><em>IDLE</em></div>
+    </div>
+    <div class="sidebar-footer">
+      <div><span class="status-dot"></span>Telemetry Online</div>
+      <div id="lastSync">Last sync: just now</div>
+    </div>
+  </aside>
+
+  <!-- ══ MAIN CANVAS ══ -->
+  <main>
+
+    <!-- Hero -->
+    <section class="hero-panel" aria-label="System overview">
+      <div class="hero-content">
+        <p class="eyebrow">Tata Steel AI Hackathon — MANTIS Agentic Maintenance Intelligence</p>
+        <h2>Autonomous Maintenance Decision Support for Steel Manufacturing</h2>
+        <p>Autonomous root-cause diagnosis, predictive failure modelling, SOP evidence retrieval, and risk-matrix calculation across sensor telemetry and historical maintenance data.</p>
+      </div>
+      <div class="impact-strip" aria-label="Key performance indicators">
+        <div><strong>18%</strong><span>Downtime Mitigation</span></div>
+        <div><strong>42h</strong><span>Predictive Horizon</span></div>
+        <div><strong>91%</strong><span>Model Confidence</span></div>
+        <div><strong>5 AI</strong><span>Specialist Agents</span></div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         VIEW: COMMAND CENTER (OVERVIEW)
+         ════════════════════════════════════════ -->
+    <section class="view active-view" id="overview">
+
+      <!-- Agentic Architecture SVG -->
+      <section class="arch-panel" aria-label="MANTIS agentic architecture">
+        <div class="arch-head">
+          <div>
+            <h3>MANTIS Agentic Architecture</h3>
+            <p>Live signal-to-action pipeline. Click the highlighted <b>Alert Surface</b> to inspect active alerts.</p>
+          </div>
+          <div class="arch-legend">
+            <span class="arch-legend-item"><i class="arch-dot arch-dot-stream"></i>Telemetry</span>
+            <span class="arch-legend-item"><i class="arch-dot arch-dot-agent"></i>AI Agent</span>
+            <span class="arch-legend-item"><i class="arch-dot arch-dot-planner"></i>Planner</span>
+            <span class="arch-legend-item"><i class="arch-dot arch-dot-alert"></i>Alert Surface</span>
+          </div>
+        </div>
+
+        <div class="arch-svg-wrap">
+          <svg class="arch-svg" viewBox="0 0 1180 320" preserveAspectRatio="xMidYMid meet" role="img" aria-label="MANTIS architecture flow diagram">
+            <defs>
+              <linearGradient id="archStream" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%"  stop-color="#2563eb" stop-opacity="0.0"/>
+                <stop offset="50%" stop-color="#2563eb" stop-opacity="0.9"/>
+                <stop offset="100%" stop-color="#2563eb" stop-opacity="0.0"/>
+              </linearGradient>
+              <linearGradient id="archAlertGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"   stop-color="#dc2626" stop-opacity="0.16"/>
+                <stop offset="100%" stop-color="#dc2626" stop-opacity="0.04"/>
+              </linearGradient>
+              <marker id="archArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="#94a3b8"/>
+              </marker>
+              <marker id="archAlertArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/>
+              </marker>
+              <filter id="archAlertGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="3" result="blur"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+
+            <!-- background grid -->
+            <g class="arch-grid" opacity="0.4">
+              <line x1="0" y1="50"  x2="1180" y2="50"  stroke="#e2e8f0" stroke-dasharray="2 4"/>
+              <line x1="0" y1="130" x2="1180" y2="130" stroke="#e2e8f0" stroke-dasharray="2 4"/>
+              <line x1="0" y1="220" x2="1180" y2="220" stroke="#e2e8f0" stroke-dasharray="2 4"/>
+            </g>
+
+            <!-- LEFT COLUMN HEADER -->
+            <text x="20" y="24" class="arch-band-label">Telemetry &amp; Agent Pipeline</text>
+
+            <!-- Telemetry sources (left column, top) -->
+            <g class="arch-row arch-row-telemetry">
+              <g class="arch-source">
+                <rect x="20"  y="38" width="100" height="42" rx="8" fill="#fff" stroke="#cbd5e1"/>
+                <text x="70"  y="56" class="arch-node-title">Sensors</text>
+                <text x="70"  y="70" class="arch-node-sub">Vibration · Temp</text>
+              </g>
+              <g class="arch-source">
+                <rect x="130" y="38" width="100" height="42" rx="8" fill="#fff" stroke="#cbd5e1"/>
+                <text x="180" y="56" class="arch-node-title">Historian</text>
+                <text x="180" y="70" class="arch-node-sub">PI · 5y archive</text>
+              </g>
+              <g class="arch-source">
+                <rect x="240" y="38" width="100" height="42" rx="8" fill="#fff" stroke="#cbd5e1"/>
+                <text x="290" y="56" class="arch-node-title">CMMS</text>
+                <text x="290" y="70" class="arch-node-sub">Work orders</text>
+              </g>
+              <g class="arch-source">
+                <rect x="350" y="38" width="100" height="42" rx="8" fill="#fff" stroke="#cbd5e1"/>
+                <text x="400" y="56" class="arch-node-title">SOP / KB</text>
+                <text x="400" y="70" class="arch-node-sub">Manuals · SOPs</text>
+              </g>
+              <g class="arch-source">
+                <rect x="460" y="38" width="100" height="42" rx="8" fill="#fff" stroke="#cbd5e1"/>
+                <text x="510" y="56" class="arch-node-title">Alarms</text>
+                <text x="510" y="70" class="arch-node-sub">PLC · SCADA</text>
+              </g>
+            </g>
+
+            <!-- connecting streams from sources down to ingestion -->
+            <g class="arch-streams" stroke="url(#archStream)" stroke-width="2" fill="none" opacity="0.85">
+              <path d="M70,80  C70,108 70,108 70,140"/>
+              <path d="M180,80 C180,108 180,108 180,140"/>
+              <path d="M290,80 C290,108 290,108 290,140"/>
+              <path d="M400,80 C400,108 400,108 400,140"/>
+              <path d="M510,80 C510,108 510,108 510,140"/>
+            </g>
+
+            <!-- AI Agents row (left column, middle) -->
+            <g class="arch-row arch-row-agents">
+              <g class="arch-agent">
+                <rect x="20"  y="140" width="120" height="56" rx="10" fill="#eff6ff" stroke="#2563eb"/>
+                <text x="80"  y="162" class="arch-agent-title">Ingestion</text>
+                <text x="80"  y="178" class="arch-agent-sub">Normalise · tag</text>
+                <circle cx="128" cy="150" r="3" fill="#10b981"/>
+              </g>
+              <g class="arch-agent">
+                <rect x="160" y="140" width="120" height="56" rx="10" fill="#eff6ff" stroke="#2563eb"/>
+                <text x="220" y="162" class="arch-agent-title">Anomaly</text>
+                <text x="220" y="178" class="arch-agent-sub">Detect · classify</text>
+                <circle cx="268" cy="150" r="3" fill="#10b981"/>
+              </g>
+              <g class="arch-agent">
+                <rect x="300" y="140" width="120" height="56" rx="10" fill="#eff6ff" stroke="#2563eb"/>
+                <text x="360" y="162" class="arch-agent-title">RAG Retriever</text>
+                <text x="360" y="178" class="arch-agent-sub">SOP · history</text>
+                <circle cx="408" cy="150" r="3" fill="#2563eb"/>
+              </g>
+              <g class="arch-agent">
+                <rect x="440" y="140" width="120" height="56" rx="10" fill="#eff6ff" stroke="#2563eb"/>
+                <text x="500" y="162" class="arch-agent-title">Risk Assessor</text>
+                <text x="500" y="178" class="arch-agent-sub">Score · prioritise</text>
+                <circle cx="548" cy="150" r="3" fill="#2563eb"/>
+              </g>
+            </g>
+
+            <!-- agent flow arrows -->
+            <g class="arch-agent-flow" stroke="#94a3b8" stroke-width="1.5" fill="none">
+              <line x1="140" y1="168" x2="160" y2="168" marker-end="url(#archArrow)"/>
+              <line x1="280" y1="168" x2="300" y2="168" marker-end="url(#archArrow)"/>
+              <line x1="420" y1="168" x2="440" y2="168" marker-end="url(#archArrow)"/>
+            </g>
+
+            <!-- LEFT COLUMN BOTTOM: Planner output -->
+            <g class="arch-row arch-row-planner">
+              <g class="arch-agent arch-agent-planner">
+                <rect x="160" y="220" width="260" height="48" rx="10" fill="#ecfdf5" stroke="#059669"/>
+                <text x="290" y="240" class="arch-agent-title arch-agent-title-green">Planner Agent</text>
+                <text x="290" y="256" class="arch-agent-sub">Actions · spares · timeline</text>
+                <circle cx="408" cy="230" r="3" fill="#10b981"/>
+              </g>
+              <!-- arrow from risk to planner -->
+              <line x1="500" y1="196" x2="380" y2="220" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#archArrow)"/>
+            </g>
+
+            <!-- arrow from planner to alert surface -->
+            <line x1="420" y1="244" x2="610" y2="160" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#archAlertArrow)"/>
+
+            <!-- RIGHT COLUMN: ACTIVE ALERT SURFACE -->
+            <g class="arch-alert-zone" id="archAlertZone" tabindex="0" role="button" aria-label="Open active alert detail">
+              <rect x="620" y="20" width="540" height="280" rx="14" fill="url(#archAlertGrad)" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="6 4" filter="url(#archAlertGlow)"/>
+              <text x="640" y="44" class="arch-zone-title">⚠ Active Alert Surface</text>
+              <text x="640" y="60" class="arch-zone-sub">Engineer-facing alerts surfaced by the agent pipeline</text>
+
+              <!-- alert card 1 -->
+              <g class="arch-alert-card" data-alert-id="ALR-CRM-001" tabindex="0" role="button" transform="translate(640, 76)">
+                <rect x="0" y="0" width="500" height="64" rx="8" fill="#fff" stroke="#fecaca"/>
+                <rect x="0" y="0" width="4" height="64" fill="#dc2626"/>
+                <text x="14" y="20" class="arch-alert-pill">P1 · CRITICAL</text>
+                <text x="100" y="20" class="arch-alert-time">Raised 13:42 · Detected 13:38 IST</text>
+                <text x="14" y="38" class="arch-alert-title">Hydraulic AGC System — Servo Valve Response Lag</text>
+                <text x="14" y="54" class="arch-alert-loc">CRM · Mill Line 1 · F2 Stand · AGC Skid 02</text>
+              </g>
+
+              <!-- alert card 2 -->
+              <g class="arch-alert-card" data-alert-id="ALR-CRM-014" tabindex="0" role="button" transform="translate(640, 148)">
+                <rect x="0" y="0" width="500" height="64" rx="8" fill="#fff" stroke="#fed7aa"/>
+                <rect x="0" y="0" width="4" height="64" fill="#d97706"/>
+                <text x="14" y="20" class="arch-alert-pill arch-alert-pill-warn">P2 · HIGH</text>
+                <text x="100" y="20" class="arch-alert-time">Raised 12:15 · Detected 12:09 IST</text>
+                <text x="14" y="38" class="arch-alert-title">Mill Stand F2 — Vibration RMS Elevated</text>
+                <text x="14" y="54" class="arch-alert-loc">CRM · Mill Line 1 · Stand F2 · Drive Side</text>
+              </g>
+
+              <!-- alert card 3 -->
+              <g class="arch-alert-card" data-alert-id="ALR-CRM-052" tabindex="0" role="button" transform="translate(640, 220)">
+                <rect x="0" y="0" width="500" height="64" rx="8" fill="#fff" stroke="#fecaca"/>
+                <rect x="0" y="0" width="4" height="64" fill="#dc2626"/>
+                <text x="14" y="20" class="arch-alert-pill">P1 · CRITICAL</text>
+                <text x="100" y="20" class="arch-alert-time">Raised 10:22 · Detected 10:18 IST</text>
+                <text x="14" y="38" class="arch-alert-title">Thickness Gauge Scanner — Calibration Drift</text>
+                <text x="14" y="54" class="arch-alert-loc">CRM · Mill Line 2 · Exit Section · Optical Scanner</text>
+              </g>
+            </g>
+          </svg>
+        </div>
+      </section>
+
+      <!-- KPI Bar -->
+      <div class="kpi-bar" aria-label="Plant KPI summary">
+        <div class="kpi-card kpi-warn" id="kpiOee">
+          <div class="kpi-label"><span class="kpi-blink"></span>Overall Equipment Effectiveness</div>
+          <div class="kpi-value" id="kpiOeeVal">78.4%</div>
+          <div class="kpi-sub">↓ 2.1 pts from last shift</div>
+        </div>
+        <div class="kpi-card kpi-crit" id="kpiAnomalies">
+          <div class="kpi-label"><span class="kpi-blink"></span>Active Anomalies</div>
+          <div class="kpi-value" id="kpiAnomaliesVal">12</div>
+          <div class="kpi-sub">3 critical · 6 elevated · 3 low</div>
+          <div class="kpi-detail" id="kpiAnomalyDetail">
+            <strong style="color:var(--critical);font-size:11px;">⬤ Critical Anomalies:</strong>
+            <ul id="kpiAnomalyList"></ul>
+          </div>
+        </div>
+        <div class="kpi-card kpi-crit" id="kpiPred">
+          <div class="kpi-label"><span class="kpi-blink"></span>Predicted Failures (24h)</div>
+          <div class="kpi-value" id="kpiPredVal">3</div>
+          <div class="kpi-sub">Earliest: Hydraulic AGC · 2h window</div>
+          <div class="kpi-detail" id="kpiPredDetail">
+            <strong style="color:var(--warn);font-size:11px;">Predicted failure windows:</strong>
+            <ul id="kpiPredList"></ul>
+          </div>
+        </div>
+        <div class="kpi-card kpi-ok" id="kpiConf">
+          <div class="kpi-label"><span class="kpi-blink"></span>AI Confidence Index</div>
+          <div class="kpi-value" id="kpiConfVal">89%</div>
+          <div class="kpi-sub">LangGraph · Multi-Agent RAG</div>
+          <div class="kpi-detail" id="kpiConfDetail">
+            <strong style="color:var(--accent);font-size:11px;">Confidence Calculation Basis:</strong>
+            <ul>
+              <li><b>Sensor Data Quality</b> — completeness and freshness of telemetry feeds (weight: 30%)</li>
+              <li><b>Historical Pattern Match</b> — similarity to resolved past incidents in knowledge base (weight: 25%)</li>
+              <li><b>Root Cause Evidence</b> — number of corroborating SOP/manual references (weight: 20%)</li>
+              <li><b>Model Agreement</b> — consensus across anomaly detection, risk assessment, and RAG agents (weight: 15%)</li>
+              <li><b>Temporal Consistency</b> — stability of predictions over the last 3 analysis cycles (weight: 10%)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Overview grid -->
+      <div class="overview-grid">
+
+        <!-- ─ LEFT: Risk Landscape ─ -->
+        <div>
+          <div class="risk-landscape">
+            <div class="risk-landscape-header">
+              <div>
+                <h3>Equipment Risk Landscape</h3>
+                <p>Predicted RUL, health score, and 7-day trend for all critical assets.</p>
+              </div>
+              <div class="segmented-control" role="group" aria-label="Asset group">
+                <button class="active" data-asset="caster" id="assetBtn-caster">Caster</button>
+                <button data-asset="bf"     id="assetBtn-bf">BF</button>
+                <button data-asset="crm"    id="assetBtn-crm">CRM</button>
+              </div>
+            </div>
+            <div class="risk-table-head" aria-hidden="true">
+              <span>Equipment</span>
+              <span>Health Score</span>
+              <span>RUL</span>
+              <span>Status</span>
+              <span>7-Day Trend</span>
+              <span></span>
+            </div>
+            <div id="riskTableBody" role="table" aria-label="Equipment risk table"></div>
+          </div>
+
+          <!-- Predicted AI Event Timeline -->
+          <div class="timeline-panel">
+            <h3>Predicted Event Timeline — AI Forecast</h3>
+            <div class="timeline-list" id="timelineList" aria-label="Predicted maintenance events"></div>
+          </div>
+        </div>
+
+        <!-- ─ RIGHT: Heatmap ─ -->
+        <div class="right-stack">
+
+          <!-- Regional Anomaly Heatmap -->
+          <div class="heatmap-wrap">
+            <h3>Regional Anomaly Matrix</h3>
+            <p>Density heatmap of active diagnostic signatures across plant zones.</p>
+            <div class="heatmap-zone-labels" aria-hidden="true">
+              <span>Z1</span><span>Z2</span><span>Z3</span><span>Z4</span><span>Z5</span><span>Z6</span><span>Z7</span><span>Z8</span>
+            </div>
+            <div class="heatmap-grid" id="heatmapGrid" aria-label="Zone anomaly heatmap"></div>
+            <div class="heatmap-legend" id="heatmapLegend" aria-live="polite"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ════════════════════════════════════════
+           DEDICATED SECTION: Critical Anomaly Signatures
+           ════════════════════════════════════════ -->
+      <section class="anomaly-wrap anomaly-section" aria-label="Critical anomaly signatures">
+        <div class="anomaly-wrap-header">
+          <div>
+            <h3>Critical Anomaly Signatures</h3>
+            <p>Live anomaly cards raised by the agent pipeline. Click any card to open its full detail with AI diagnosis.</p>
+          </div>
+          <span class="anomaly-count-badge" id="anomalyBadge">2 Active</span>
+        </div>
+        <div class="anomaly-signatures" id="anomalyList" aria-label="Critical anomaly cards"></div>
+      </section>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         VIEW: CRM PROCESS FLOW MONITOR
+         ════════════════════════════════════════ -->
+    <section class="view" id="crm-flow">
+      <section class="blt-header">
+        <div>
+          <h3 id="flowTitle">CRM Process Flow Monitor</h3>
+          <span id="flowSubtitle">Live cold-rolling mill schematic — strip flow, mill stands, hydraulic AGC, and quality instrumentation</span>
+        </div>
+        <div class="segmented-control" role="group" aria-label="Process flow selector">
+          <button class="active" data-flow="crm" id="flowBtn-crm">CRM</button>
+          <button data-flow="bf" id="flowBtn-bf">BF</button>
+          <button data-flow="caster" id="flowBtn-caster">Caster</button>
+        </div>
+      </section>
+      <section class="blt-layout">
+
+        <!-- Left parameters -->
+        <aside class="panel blt-parameters">
+          <h3>Mill Parameters</h3>
+          <div id="crmLeftParameters"></div>
+        </aside>
+
+        <!-- Center schematic -->
+        <section class="blt-process" aria-label="CRM process flow schematic">
+          <p class="crm-flow-title">Cold Rolling Mill — Live Process Schematic</p>
+
+          <!-- Mill stand flow track -->
+          <div class="mill-flow-track" id="millFlowTrack" aria-label="Mill flow stations"></div>
+
+          <!-- HYD AGC sub-layer -->
+          <div class="agc-layer" id="agcLayer" aria-label="Hydraulic AGC systems"></div>
+
+          <!-- Strip metrics bar -->
+          <div class="strip-metrics" id="stripMetrics" aria-label="Strip process metrics"></div>
+
+          <!-- Status grid -->
+          <div class="blt-status-grid" id="bltStatusGrid"></div>
+        </section>
+
+        <!-- Right parameters -->
+        <aside class="panel blt-parameters">
+          <h3>Quality &amp; Drive</h3>
+          <div id="crmRightParameters"></div>
+        </aside>
+
+        <!-- Health + Alerts stack -->
+        <aside class="blt-side-stack">
+          <section class="panel overall-health">
+            <h3>System Health</h3>
+            <div class="health-dial">
+              <div class="dial-arc"></div>
+              <div class="dial-needle" id="healthNeedle"></div>
+              <span class="dial-label low">0%</span>
+              <span class="dial-label mid">50%</span>
+              <span class="dial-label high">100%</span>
+            </div>
+            <div class="health-bars" id="crmHealthBars"></div>
+          </section>
+          <section class="panel blt-alert-panel">
+            <h3>Active Alert Counts</h3>
+            <div class="mini-alert-chart" id="crmAlertChart"></div>
+          </section>
+        </aside>
+
+      </section>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         VIEW: AI DIAGNOSIS
+         ════════════════════════════════════════ -->
+    <section class="view" id="diagnosis">
+      <div class="two-column">
+
+        <!-- Chat -->
+        <section class="panel assistant-panel">
+          <div class="panel-title">
+            <div>
+              <h3>Natural Language Maintenance Assistant</h3>
+              <p>Ask a question or run a guided diagnosis workflow.</p>
+            </div>
+            <span class="confidence-badge">LangGraph + Multi-Agent RAG</span>
+          </div>
+          <div class="ai-status" id="aiStatus">AI mode: connecting to LangGraph agent…</div>
+          <div class="chat-window" id="chatWindow" role="log" aria-live="polite">
+            <article class="message ai">
+              <strong>MANTIS AI</strong>
+              <p>System initialised. Select an asset and ask any diagnostic question — I will cross-reference telemetry, SOPs, and historical maintenance records to generate an explainable recommendation.</p>
+            </article>
+          </div>
+          <form class="chat-form" id="chatForm">
+            <input id="chatInput" type="text" value="Why is Hydraulic AGC System Line 1 at critical risk?" aria-label="Maintenance question" autocomplete="off"/>
+            <button type="submit">Run Diagnosis</button>
+          </form>
+        </section>
+
+        <!-- Root cause -->
+        <section class="panel">
+          <div class="panel-title compact">
+            <div>
+              <h3>Explainable Root Cause Analysis</h3>
+              <p>Evidence chain assembled by the diagnostic agent.</p>
+            </div>
+          </div>
+          <div class="root-cause-list" id="rootCauseList"></div>
+        </section>
+      </div>
+
+      <!-- Agent workflow -->
+      <section class="panel agent-map">
+        <div class="panel-title compact">
+          <div>
+            <h3>Agentic AI Workflow</h3>
+            <p>Specialist agents collaborate before a recommendation is surfaced.</p>
+          </div>
+        </div>
+        <div class="agent-flow" role="list">
+          <div role="listitem"><strong>Ingestion Agent</strong><span>Logs, sensors, SOPs</span></div>
+          <div role="listitem"><strong>Anomaly Agent</strong><span>Vibration &amp; thermal drift</span></div>
+          <div role="listitem"><strong>RAG Agent</strong><span>Manuals &amp; prior jobs</span></div>
+          <div role="listitem"><strong>Risk Agent</strong><span>Safety, quality, downtime</span></div>
+          <div role="listitem"><strong>Planner Agent</strong><span>Actions, spares, timeline</span></div>
+        </div>
+      </section>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         VIEW: MAINTENANCE PLAN
+         ════════════════════════════════════════ -->
+    <section class="view" id="planning">
+      <section class="panel">
+        <div class="panel-title">
+          <div>
+            <h3>Maintenance Action Prioritisation</h3>
+            <p>Recommended work queue based on risk, production impact, and spare availability.</p>
+          </div>
+          <button class="primary-btn" id="optimizePlan">Optimise Plan</button>
+        </div>
+        <div class="work-table" role="table" aria-label="Maintenance action table">
+          <div class="table-row table-head" role="row">
+            <span>Priority</span><span>Asset</span><span>Risk</span><span>Recommendation</span><span>ETA</span>
+          </div>
+          <div id="workRows"></div>
+        </div>
+      </section>
+      <section class="panel business-case">
+        <h3>Business Impact &amp; Feasibility</h3>
+        <p>Phased deployment: advisory mode → CMMS integration → engineer feedback loop → model retraining.</p>
+        <div class="impact-cards">
+          <article><strong>↓ Unplanned Downtime</strong><span>Earlier warnings and clearer action ownership per shift.</span></article>
+          <article><strong>⚡ Faster Troubleshooting</strong><span>RAG evidence reduces manual search across SOPs and records.</span></article>
+          <article><strong>⬆ Scalable Rollout</strong><span>Reusable agents for caster, blast furnace, mill, and utilities.</span></article>
+        </div>
+      </section>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         VIEW: KNOWLEDGE BASE
+         ════════════════════════════════════════ -->
+    <section class="view" id="knowledge">
+      <div class="two-column">
+        <section class="panel">
+          <div class="panel-title compact">
+            <div>
+              <h3>Retrieved Knowledge Evidence</h3>
+              <p>Traceable snippets used in the current recommendation.</p>
+            </div>
+          </div>
+          <div class="evidence-list" id="evidenceList"></div>
+        </section>
+        <section class="panel feedback-panel">
+          <div class="panel-title compact">
+            <div>
+              <h3>Continuous Learning Feedback</h3>
+              <p>Engineer validation improves retrieval, thresholds, and future recommendations.</p>
+            </div>
+          </div>
+          <label>Was the recommendation useful?
+            <select id="feedbackSelect">
+              <option>Yes, action is correct</option>
+              <option>Partially correct</option>
+              <option>Incorrect root cause</option>
+            </select>
+          </label>
+          <label>Engineer note
+            <textarea id="feedbackNote">Lubrication pressure was 18% below normal during casting speed increase.</textarea>
+          </label>
+          <button class="primary-btn" id="saveFeedback">Save Feedback</button>
+          <p class="feedback-status" id="feedbackStatus" aria-live="polite"></p>
+        </section>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ════════════════════════════════════════
+     ALERT DETAIL MODAL
+     ════════════════════════════════════════ -->
+<div class="alert-modal-backdrop" id="alertModal" aria-hidden="true">
+  <div class="alert-modal" role="dialog" aria-modal="true" aria-labelledby="alertModalTitle">
+    <header class="alert-modal-head">
+      <div class="alert-modal-id-block">
+        <span class="alert-modal-id" id="alertModalId">ALR-XXX-000</span>
+        <span class="alert-modal-pill" id="alertModalPill">P1-CRIT</span>
+      </div>
+      <h2 id="alertModalTitle">Alert title</h2>
+      <p id="alertModalSubtitle">Short subtitle</p>
+      <button class="alert-modal-close" id="alertModalClose" aria-label="Close alert details">×</button>
+    </header>
+
+    <div class="alert-modal-body">
+
+      <!-- LEFT — full alert detail -->
+      <section class="alert-detail-pane">
+
+        <div class="alert-meta-grid">
+          <div><small>Severity</small><strong id="alertMetaSeverity">—</strong></div>
+          <div><small>Status</small><strong id="alertMetaStatus">—</strong></div>
+          <div><small>Asset / Node</small><strong id="alertMetaAsset">—</strong></div>
+          <div><small>Strand / Line</small><strong id="alertMetaStrand">—</strong></div>
+          <div><small>Location</small><strong id="alertMetaLocation">—</strong></div>
+          <div><small>Parameter</small><strong id="alertMetaParameter">—</strong></div>
+          <div><small>Detected At</small><strong id="alertMetaDetected">—</strong></div>
+          <div><small>Raised At</small><strong id="alertMetaRaised">—</strong></div>
+          <div><small>Acknowledged</small><strong id="alertMetaAck">—</strong></div>
+          <div><small>Owner</small><strong id="alertMetaOwner">—</strong></div>
+          <div><small>Supervisor</small><strong id="alertMetaSupervisor">—</strong></div>
+          <div><small>SOP / Work Order</small><strong id="alertMetaSop">—</strong></div>
+        </div>
+
+        <div class="alert-sig-block">
+          <h4>Live Signature</h4>
+          <p id="alertSignature">—</p>
+        </div>
+
+        <div class="alert-value-row">
+          <div>
+            <small>Current Value</small>
+            <strong id="alertCurrentValue">—</strong>
+          </div>
+          <div>
+            <small>Baseline</small>
+            <strong id="alertBaselineValue">—</strong>
+          </div>
+          <div>
+            <small>Threshold</small>
+            <strong id="alertThreshold">—</strong>
+          </div>
+        </div>
+
+        <div class="alert-related">
+          <h4>Related Alarms</h4>
+          <div id="alertRelatedList" class="alert-chip-row"></div>
+        </div>
+
+        <div class="alert-actions">
+          <button class="primary-btn" id="alertAckBtn">Acknowledge</button>
+          <button class="primary-btn" id="alertEscalateBtn">Escalate to Engineer</button>
+          <button class="primary-btn ghost" id="alertCreateWoBtn">Create Work Order</button>
+          <button class="primary-btn ghost" id="alertRunDiagBtn">Run AI Diagnosis</button>
+        </div>
+      </section>
+
+      <!-- RIGHT — AI Diagnosis (clued with alert) -->
+      <aside class="alert-ai-pane">
+        <div class="panel-title compact">
+          <div>
+            <h3>AI Diagnostic — Linked to Alert</h3>
+            <p>Explainable root-cause, evidence, and recommended action for the selected alert.</p>
+          </div>
+          <span class="confidence-badge" id="alertAiSource">LangGraph + Multi-Agent RAG</span>
+        </div>
+
+        <div class="ai-diagnosis-summary" id="alertAiSummary">
+          <div class="typing-indicator"><span></span><span></span><span></span></div>
+        </div>
+
+        <h4 class="ai-section-title">Root Cause Hypotheses</h4>
+        <div class="root-cause-list" id="alertAiRootCauses"></div>
+
+        <h4 class="ai-section-title">Evidence Chain</h4>
+        <div class="evidence-list" id="alertAiEvidence"></div>
+
+        <h4 class="ai-section-title">Recommended Actions</h4>
+        <div class="alert-reco-list" id="alertAiActions"></div>
+
+        <div class="ai-confidence">
+          <div>
+            <small>Model Confidence</small>
+            <strong id="alertAiConfidence">—</strong>
+          </div>
+          <div>
+            <small>Failure Probability (24h)</small>
+            <strong id="alertAiProb">—</strong>
+          </div>
+          <div>
+            <small>Time to Action</small>
+            <strong id="alertAiTta">—</strong>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="data/app-data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
