@@ -18,7 +18,7 @@ const mimeTypes = {
   ".svg": "image/svg+xml"
 };
 
-const server = http.createServer(async (req, res) => {
+const handler = async (req, res) => {
   // CORS for local dev
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
@@ -43,13 +43,18 @@ const server = http.createServer(async (req, res) => {
     console.error("Server error:", error);
     sendJson(res, 500, { error: "Unexpected server error" });
   }
-});
+};
 
-server.listen(port, () => {
-  console.log(`\n  MANTIS AI — Predictive Maintenance Intelligence`);
-  console.log(`  Running at http://localhost:${port}`);
-  console.log(`  LangGraph Agent: ${process.env.MINIMAX_API_KEY ? "✓ Connected" : "✗ Key missing"}\n`);
-});
+module.exports = handler;
+
+if (require.main === module) {
+  const server = http.createServer(handler);
+  server.listen(port, () => {
+    console.log(`\n  MANTIS AI — Predictive Maintenance Intelligence`);
+    console.log(`  Running at http://localhost:${port}`);
+    console.log(`  LangGraph Agent: ${process.env.MINIMAX_API_KEY ? "✓ Connected" : "✗ Key missing"}\n`);
+  });
+}
 
 function loadEnvFile() {
   const envPath = path.join(root, ".env");
